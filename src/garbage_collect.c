@@ -36,6 +36,9 @@ void gc_add_free_block(uint32_t block_index) {
     free_block_list[free_block_count++] = block_index;
 }
 
+/*
+    Greedy Strategy: 挑選 invalid page 最多的 block
+*/
 NandStatus gc_trigger(void) {
     printf("--- Garbage Collection Triggered ---\n");
     

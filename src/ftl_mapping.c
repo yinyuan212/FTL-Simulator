@@ -32,20 +32,18 @@ void ftl_init(void) {
 
 static NandStatus get_next_free_page(uint32_t *pblock, uint32_t *poffset) {
   if (next_free_page_offset >= NAND_PAGES_PER_BLOCK) {
+    if (gc_is_needed()) {
+      // 提早檢查：在耗盡所有可用區塊前，先看是否已經達到 GC 的低水位線
+      printf("Free blocks running low, triggering GC...\n");
+      gc_trigger();
+    }
+
     int new_block = gc_get_free_block();
     if (new_block < 0) {
-      if (gc_is_needed()) {
-        printf("No free blocks available, triggering GC...\n");
-        gc_trigger();
-        new_block = gc_get_free_block();
-        if (new_block < 0) {
-          printf("FATAL: No free blocks even after GC!\n");
-          return NAND_ERR_NO_FREE_BLOCKS;
-        }
-      } else {
-        return NAND_ERR_NO_FREE_BLOCKS;
-      }
+      printf("FATAL: No free blocks even after GC!\n");
+      return NAND_ERR_NO_FREE_BLOCKS;
     }
+    
     current_active_block = (uint32_t)new_block;
     next_free_page_offset = 0;
   }
