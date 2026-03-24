@@ -1,0 +1,14 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug FTL Project (LLDB)",
+            "type": "lldb",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/ftl_simulator.exe",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "preLaunchTask": "Build FTL Project"
+        }
+    ]
+}
