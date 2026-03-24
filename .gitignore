@@ -15,6 +15,10 @@ build/
 Thumbs.db
 
 # 5. VS Code 個人設定 (視情況保留)
-# 我們剛剛辛苦寫好的 tasks.json 和 launch.json 很有保留價值，
-# 所以我沒有把它們擋掉。如果你以後不想追蹤 IDE 設定，可以把下行的註解拿掉：
 # .vscode/
+
+# Python 快取檔
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
